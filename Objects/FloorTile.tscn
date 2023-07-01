@@ -1,0 +1,36 @@
+[gd_scene load_steps=9 format=3 uid="uid://33uu35y4qu47"]
+
+[ext_resource type="Texture2D" uid="uid://u2ajefq1thqd" path="res://Materials/WoodenPlanks/Planks030A_2K_Color.png" id="1_1hlbg"]
+[ext_resource type="Texture2D" uid="uid://c1vvnluuf2atf" path="res://Materials/WoodenPlanks/Planks030A_2K_AmbientOcclusion.png" id="2_t0sg8"]
+[ext_resource type="Texture2D" uid="uid://dlh2ecqvqflqv" path="res://Materials/WoodenPlanks/Planks030A_2K_Metalness.png" id="3_fhuee"]
+[ext_resource type="Texture2D" uid="uid://dv6exkhedbv5y" path="res://Materials/WoodenPlanks/Planks030A_2K_NormalGL.png" id="4_gjxct"]
+[ext_resource type="Texture2D" uid="uid://hqbt3oh5tdud" path="res://Materials/WoodenPlanks/Planks030A_2K_Roughness.png" id="5_aoqs6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1kjxt"]
+albedo_texture = ExtResource("1_1hlbg")
+metallic = 1.0
+metallic_texture = ExtResource("3_fhuee")
+roughness_texture = ExtResource("5_aoqs6")
+normal_enabled = true
+normal_texture = ExtResource("4_gjxct")
+ao_enabled = true
+ao_texture = ExtResource("2_t0sg8")
+uv1_scale = Vector3(0.2, 0.2, 0.2)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_m3jdf"]
+material = SubResource("StandardMaterial3D_1kjxt")
+size = Vector2(5, 5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_br0of"]
+size = Vector3(5, 1, 5)
+
+[node name="FloorTile" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("PlaneMesh_m3jdf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
+shape = SubResource("BoxShape3D_br0of")

@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://b6qrvkmastuds"]
+
+[ext_resource type="Script" path="res://Code/spawnPoint.gd" id="1_64lh2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5jfgx"]
+albedo_color = Color(0, 0, 1, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_h30wv"]
+material = SubResource("StandardMaterial3D_5jfgx")
+height = 4.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_2txn5"]
+size = Vector3(0.25, 0.25, 0.5)
+
+[node name="spawnPoint" type="MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2, -9)
+mesh = SubResource("CapsuleMesh_h30wv")
+script = ExtResource("1_64lh2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -0.5)
+mesh = SubResource("BoxMesh_2txn5")

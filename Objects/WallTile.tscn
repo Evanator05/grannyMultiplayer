@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8eo4pnv26ntq"]
+
+[ext_resource type="Material" uid="uid://cr0q5wmq5ne7x" path="res://Materials/Plaster1.material" id="1_5sn8k"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_vtvhx"]
+material = ExtResource("1_5sn8k")
+size = Vector2(5, 8)
+orientation = 0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ibefv"]
+size = Vector3(1, 8, 5)
+
+[node name="WallTile" type="StaticBody3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 4, 0)
+mesh = SubResource("PlaneMesh_vtvhx")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 4, 0)
+shape = SubResource("BoxShape3D_ibefv")

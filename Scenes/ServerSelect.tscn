@@ -1,0 +1,198 @@
+[gd_scene load_steps=3 format=3 uid="uid://s72bkkb631m"]
+
+[ext_resource type="Script" path="res://Code/Menus/ServerSelect.gd" id="1_1obuj"]
+[ext_resource type="Script" path="res://Code/Menus/CreateServer.gd" id="2_1h15c"]
+
+[node name="ServerSelect" type="Control" node_paths=PackedStringArray("startingButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1obuj")
+startingButton = NodePath("Server/Refresh")
+
+[node name="Server" type="Control" parent="."]
+layout_mode = 1
+anchor_left = 0.278
+anchor_top = 0.049
+anchor_right = 0.722
+anchor_bottom = 0.938
+offset_left = -0.256042
+offset_top = 0.247999
+offset_right = 0.25592
+offset_bottom = 0.175964
+
+[node name="ServerList" type="ItemList" parent="Server"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.056
+anchor_right = 1.0
+anchor_bottom = 0.944
+offset_top = -0.256001
+offset_bottom = 0.255981
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Refresh" type="Button" parent="Server"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -68.0
+offset_bottom = 31.0
+grow_horizontal = 0
+text = "Refresh"
+
+[node name="FindWithCode" type="Button" parent="Server"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.422
+anchor_top = 0.944
+anchor_right = 0.5
+anchor_bottom = 1.005
+offset_left = -0.0639954
+offset_top = 0.255981
+offset_bottom = -0.103943
+grow_horizontal = 0
+grow_vertical = 0
+text = "Join"
+
+[node name="FindWithIp" type="Button" parent="Server"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.422
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.061
+offset_left = -0.0639954
+offset_bottom = -0.136047
+grow_horizontal = 0
+grow_vertical = 0
+focus_neighbor_left = NodePath("../ip")
+text = "Join"
+
+[node name="code" type="LineEdit" parent="Server"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.944
+anchor_right = 0.422
+anchor_bottom = 1.005
+offset_top = 0.255981
+offset_right = -0.0640259
+offset_bottom = 0.0240479
+grow_vertical = 0
+focus_neighbor_bottom = NodePath("../ip")
+placeholder_text = "Enter Code (cap sensitive)"
+alignment = 1
+
+[node name="ip" type="LineEdit" parent="Server"]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 1.0
+anchor_right = 0.422
+anchor_bottom = 1.061
+offset_right = -0.0640259
+offset_bottom = -0.231995
+grow_vertical = 0
+focus_neighbor_top = NodePath("../code")
+focus_neighbor_right = NodePath("../FindWithIp")
+placeholder_text = "Enter IP"
+alignment = 1
+
+[node name="CreateLobby" type="Button" parent="Server"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.944
+anchor_right = 1.0
+anchor_bottom = 1.005
+offset_top = 0.255981
+offset_bottom = -0.103943
+grow_horizontal = 0
+grow_vertical = 0
+text = "Create Lobby"
+
+[node name="CreateServer" type="ColorRect" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.278
+anchor_top = 0.099
+anchor_right = 0.722
+anchor_bottom = 0.889
+offset_left = -0.256042
+offset_top = -0.152008
+offset_right = 0.25592
+offset_bottom = -0.0720215
+color = Color(0.423529, 0.423529, 0.423529, 1)
+script = ExtResource("2_1h15c")
+
+[node name="MarginContainer" type="MarginContainer" parent="CreateServer"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 150
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 150
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CreateServer/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Name" type="LineEdit" parent="CreateServer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "Server Name"
+alignment = 1
+
+[node name="Port" type="SpinBox" parent="CreateServer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+max_value = 65535.0
+value = 25565.0
+alignment = 1
+prefix = "Server Port"
+
+[node name="Private" type="CheckButton" parent="CreateServer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Private"
+alignment = 1
+
+[node name="createServer" type="Button" parent="CreateServer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Create Server"
+
+[node name="Connecting" type="Control" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="Connecting"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -82.0
+offset_top = -13.0
+offset_right = 82.0
+offset_bottom = 13.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Connecting To Server"
+
+[connection signal="item_activated" from="Server/ServerList" to="." method="_on_server_list_item_activated"]
+[connection signal="pressed" from="Server/Refresh" to="." method="refreshServerList"]
+[connection signal="pressed" from="Server/FindWithCode" to="." method="_on_find_with_code_pressed"]
+[connection signal="pressed" from="Server/FindWithIp" to="." method="_on_find_with_ip_pressed"]
+[connection signal="pressed" from="Server/CreateLobby" to="." method="openCreateServer"]
+[connection signal="pressed" from="CreateServer/MarginContainer/VBoxContainer/createServer" to="CreateServer" method="_on_create_server_pressed"]

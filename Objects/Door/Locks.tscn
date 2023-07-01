@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://bnuyuvkc05gnc"]
+
+[ext_resource type="Script" path="res://Code/DoorLocks.gd" id="1_mqm61"]
+
+[node name="Locks" type="Node3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 7.5, 0, 20)
+script = ExtResource("1_mqm61")

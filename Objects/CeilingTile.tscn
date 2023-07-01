@@ -1,0 +1,27 @@
+[gd_scene load_steps=6 format=3 uid="uid://v7avom015c4d"]
+
+[ext_resource type="Texture2D" uid="uid://clxv74obrv8au" path="res://Materials/Plaster3/PaintedPlaster017_2K_Color.png" id="1_kds6w"]
+[ext_resource type="Texture2D" uid="uid://c7mioiolkudqn" path="res://Materials/Plaster3/PaintedPlaster017_2K_NormalGL.png" id="2_ec2e6"]
+[ext_resource type="Texture2D" uid="uid://db88vo4aaescb" path="res://Materials/Plaster3/PaintedPlaster017_2K_Roughness.png" id="3_0bet4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2tb6y"]
+albedo_texture = ExtResource("1_kds6w")
+roughness_texture = ExtResource("3_0bet4")
+normal_enabled = true
+normal_scale = 0.5
+normal_texture = ExtResource("2_ec2e6")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
+uv1_world_triplanar = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_swo1r"]
+material = SubResource("StandardMaterial3D_2tb6y")
+flip_faces = true
+size = Vector2(5, 5)
+orientation = 1
+
+[node name="CeilingTile" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8, 0)
+mesh = SubResource("QuadMesh_swo1r")

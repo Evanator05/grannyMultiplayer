@@ -1,0 +1,116 @@
+[gd_scene load_steps=9 format=3 uid="uid://be72d43sbqd18"]
+
+[ext_resource type="Script" path="res://Code/Player/Player.gd" id="1_x23qu"]
+[ext_resource type="Script" path="res://Code/Player/head.gd" id="2_a6sos"]
+[ext_resource type="Script" path="res://Code/Player/interactCast.gd" id="3_p5k8c"]
+[ext_resource type="Script" path="res://Code/Player/flashLight.gd" id="4_qi8q8"]
+[ext_resource type="PackedScene" uid="uid://qb11vviivp5u" path="res://Objects/Character.tscn" id="5_gbuit"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_uhgjq"]
+height = 4.0
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_t0xo7"]
+auto_exposure_enabled = true
+auto_exposure_min_sensitivity = 50.0
+
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_o50kl"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = false
+properties/0/sync = true
+properties/0/watch = false
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = false
+properties/1/sync = true
+properties/1/watch = false
+properties/2/path = NodePath("head:rotation")
+properties/2/spawn = false
+properties/2/sync = true
+properties/2/watch = false
+properties/3/path = NodePath("Character/AnimationTree:parameters/walking/blend_position")
+properties/3/spawn = false
+properties/3/sync = true
+properties/3/watch = false
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+script = ExtResource("1_x23qu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_uhgjq")
+
+[node name="head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+script = ExtResource("2_a6sos")
+
+[node name="Camera" type="Camera3D" parent="head"]
+cull_mask = 1048573
+attributes = SubResource("CameraAttributesPractical_t0xo7")
+fov = 90.0
+far = 100.0
+
+[node name="interactCast" type="RayCast3D" parent="head" node_paths=PackedStringArray("player")]
+enabled = false
+target_position = Vector3(0, 0, -5)
+collide_with_areas = true
+script = ExtResource("3_p5k8c")
+player = NodePath("../..")
+
+[node name="Node3D" type="Node3D" parent="head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, -0.3, 0)
+
+[node name="floorCast" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+target_position = Vector3(0, -0.5, 0)
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_o50kl")
+
+[node name="NameTag" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 0)
+pixel_size = 0.01
+billboard = 1
+shaded = true
+texture_filter = 0
+text = "guest"
+
+[node name="flashLight" type="SpotLight3D" parent="." node_paths=PackedStringArray("targetNode")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+top_level = true
+shadow_enabled = true
+shadow_reverse_cull_face = true
+spot_range = 15.0
+script = ExtResource("4_qi8q8")
+targetNode = NodePath("../head/Node3D")
+
+[node name="Character" parent="." node_paths=PackedStringArray("player") instance=ExtResource("5_gbuit")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, -2, 0)
+player = NodePath("..")
+
+[node name="Skeleton3D" parent="Character/Armature_012" index="0"]
+bones/1/position = Vector3(-1.52847e-07, 2.17085, 0.0323962)
+bones/1/rotation = Quaternion(-0.0294953, -0.0454093, -0.0271784, 0.998163)
+bones/2/rotation = Quaternion(-0.0427894, 0.0153134, 0.0288827, 0.998549)
+bones/3/rotation = Quaternion(0.0120811, 0.00225468, 0.015235, 0.999808)
+bones/4/rotation = Quaternion(0.0247998, 0.00267479, 0.0152595, 0.999572)
+bones/5/rotation = Quaternion(0.0548536, -0.00241686, 0.00286743, 0.998487)
+bones/6/rotation = Quaternion(-0.0757561, 0.00753031, 0.000731329, 0.997098)
+bones/8/rotation = Quaternion(-0.63359, 0.454957, -0.500848, -0.37514)
+bones/9/rotation = Quaternion(0.451439, -0.262282, -0.22708, 0.822098)
+bones/10/rotation = Quaternion(-1.02827e-07, -3.89155e-08, -0.0584449, 0.998291)
+bones/11/rotation = Quaternion(0.0509293, 0.178647, -0.00600619, 0.982576)
+bones/32/rotation = Quaternion(0.633453, 0.45401, -0.486047, 0.395437)
+bones/33/rotation = Quaternion(0.529693, 0.179305, 0.211265, 0.80165)
+bones/34/rotation = Quaternion(7.35035e-07, -1.11032e-08, 0.0152649, 0.999884)
+bones/35/rotation = Quaternion(0.0401498, -0.291374, 0.0351054, 0.955121)
+bones/56/rotation = Quaternion(-0.0930095, 0.00386548, 0.99526, -0.0281485)
+bones/57/rotation = Quaternion(-0.114745, 0.0838064, -0.0327923, 0.98931)
+bones/58/rotation = Quaternion(0.497227, 0.022742, 0.0209762, 0.867069)
+bones/59/rotation = Quaternion(0.392671, -3.4313e-08, -6.87407e-08, 0.919679)
+bones/61/rotation = Quaternion(0.139961, 0.0833533, 0.983686, -0.0763277)
+bones/62/rotation = Quaternion(-0.144321, -0.00873345, 0.0382853, 0.988751)
+bones/63/rotation = Quaternion(0.450922, -0.0304616, -0.0564588, 0.890255)
+
+[node name="AnimationTree" parent="Character" index="2"]
+parameters/turning/blend_position = 0.0134228
+
+[editable path="Character"]

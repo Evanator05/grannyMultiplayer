@@ -1,0 +1,64 @@
+[gd_scene load_steps=5 format=3 uid="uid://lcn0in41oi5c"]
+
+[ext_resource type="Script" path="res://Code/Menus/HostScreen.gd" id="1_d3rvd"]
+[ext_resource type="Script" path="res://Code/MenuTabManger.gd" id="2_7ynmt"]
+[ext_resource type="Script" path="res://Code/Menus/playerList.gd" id="2_gxr0q"]
+[ext_resource type="Script" path="res://Code/MenuTab.gd" id="3_7sit2"]
+
+[node name="HostScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_d3rvd")
+
+[node name="Tabs" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_7ynmt")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="Tabs" node_paths=PackedStringArray("startingButton")]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+split_offset = 256
+script = ExtResource("3_7sit2")
+startingButton = NodePath("MarginContainer/VBoxContainer/Button")
+
+[node name="playerList" type="ItemList" parent="Tabs/HSplitContainer"]
+layout_mode = 2
+script = ExtResource("2_gxr0q")
+
+[node name="MarginContainer" type="MarginContainer" parent="Tabs/HSplitContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 128
+theme_override_constants/margin_right = 128
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/HSplitContainer/MarginContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="Tabs/HSplitContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Host Screen"
+horizontal_alignment = 1
+
+[node name="code" type="Button" parent="Tabs/HSplitContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Copy Room Code"
+
+[node name="Button" type="Button" parent="Tabs/HSplitContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Start Game"
+
+[connection signal="pressed" from="Tabs/HSplitContainer/MarginContainer/VBoxContainer/code" to="." method="_on_code_pressed"]
+[connection signal="pressed" from="Tabs/HSplitContainer/MarginContainer/VBoxContainer/Button" to="." method="_on_button_pressed"]

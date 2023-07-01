@@ -1,0 +1,140 @@
+[gd_scene load_steps=6 format=3 uid="uid://csh2r1rl5jmb3"]
+
+[ext_resource type="Script" path="res://Code/Menus/MainMenu.gd" id="1_d7x3m"]
+[ext_resource type="AudioStream" uid="uid://lobq75mamfnu" path="res://Audio/Music/menuMusic.wav" id="2_610v8"]
+[ext_resource type="Script" path="res://Code/MenuTabManger.gd" id="2_xnkk2"]
+[ext_resource type="Script" path="res://Code/MenuTab.gd" id="3_asn1l"]
+[ext_resource type="PackedScene" uid="uid://s72bkkb631m" path="res://Scenes/ServerSelect.tscn" id="4_acuk2"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_d7x3m")
+
+[node name="Tabs" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_xnkk2")
+
+[node name="Buttons" type="Control" parent="Tabs" node_paths=PackedStringArray("startingButton")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -168.0
+offset_top = -228.0
+offset_right = 168.0
+offset_bottom = 228.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_asn1l")
+startingButton = NodePath("VBoxContainer/findGame")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Buttons"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="findGame" type="Button" parent="Tabs/Buttons/VBoxContainer"]
+layout_mode = 2
+text = "Find a Game"
+
+[node name="settings" type="Button" parent="Tabs/Buttons/VBoxContainer"]
+layout_mode = 2
+text = "Settings"
+
+[node name="quit" type="Button" parent="Tabs/Buttons/VBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[node name="Settings" type="Control" parent="Tabs" node_paths=PackedStringArray("startingButton")]
+visible = false
+layout_mode = 1
+anchor_left = 0.333
+anchor_top = 0.198
+anchor_right = 0.667
+anchor_bottom = 0.79
+offset_left = 0.384003
+offset_top = -0.304001
+offset_right = -0.383972
+offset_bottom = 0.0799866
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("3_asn1l")
+startingButton = NodePath("MarginContainer/VBoxContainer/Back")
+
+[node name="ColorRect" type="ColorRect" parent="Tabs/Settings"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="Tabs/Settings"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 32
+theme_override_constants/margin_bottom = 32
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Tabs/Settings/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Back" type="Button" parent="Tabs/Settings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Back"
+
+[node name="username" type="LineEdit" parent="Tabs/Settings/MarginContainer/VBoxContainer"]
+layout_mode = 2
+placeholder_text = "username"
+alignment = 1
+
+[node name="ServerSelect" parent="Tabs" instance=ExtResource("4_acuk2")]
+layout_mode = 1
+
+[node name="Button" type="Button" parent="Tabs/ServerSelect"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.278
+anchor_top = 0.049
+anchor_right = 0.317
+anchor_bottom = 0.097
+offset_left = -0.256042
+offset_top = 0.247999
+offset_right = -0.18399
+offset_bottom = 0.143997
+text = "Back"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_610v8")
+volume_db = -2.159
+autoplay = true
+
+[connection signal="pressed" from="Tabs/Buttons/VBoxContainer/findGame" to="." method="_on_find_game_pressed"]
+[connection signal="pressed" from="Tabs/Buttons/VBoxContainer/settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="Tabs/Buttons/VBoxContainer/quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="Tabs/Settings/MarginContainer/VBoxContainer/Back" to="." method="_on_back_pressed"]
+[connection signal="text_changed" from="Tabs/Settings/MarginContainer/VBoxContainer/username" to="." method="_on_username_text_changed"]
+[connection signal="pressed" from="Tabs/ServerSelect/Button" to="." method="_on_button_pressed"]

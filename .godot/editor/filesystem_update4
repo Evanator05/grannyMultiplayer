@@ -1,0 +1,13 @@
+res://Objects/Player.tscn
+res://Materials/Plaster1.material
+res://Materials/Wood.material
+res://Materials/Mirror.material
+res://Code/Character.gd
+res://Scenes/MainMenu.tscn
+res://Scenes/HostScreen.tscn
+res://Scenes/Level.tscn
+res://Scenes/ServerSelect.tscn
+res://Objects/Character.tscn
+res://Code/Menus/HostScreen.gd
+res://Code/ServerManager.gd
+res://Code/Player/Player.gd

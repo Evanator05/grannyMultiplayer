@@ -1,0 +1,232 @@
+[gd_scene load_steps=22 format=3 uid="uid://bdopfwji7ej7x"]
+
+[ext_resource type="Script" path="res://Code/Level.gd" id="1_0ndj6"]
+[ext_resource type="Script" path="res://Code/Menus/playerList.gd" id="2_pjsbn"]
+[ext_resource type="PackedScene" uid="uid://b6qrvkmastuds" path="res://Objects/SpawnPoint.tscn" id="2_vv0x7"]
+[ext_resource type="PackedScene" uid="uid://qddxkamueb6u" path="res://Objects/DoorTile.tscn" id="5_hkemu"]
+[ext_resource type="PackedScene" uid="uid://33uu35y4qu47" path="res://Objects/FloorTile.tscn" id="5_sh1rq"]
+[ext_resource type="PackedScene" uid="uid://b8eo4pnv26ntq" path="res://Objects/WallTile.tscn" id="6_qd7bx"]
+[ext_resource type="PackedScene" uid="uid://c0ovgpk4u3s8" path="res://Objects/Door/Door.tscn" id="7_y0pe8"]
+[ext_resource type="PackedScene" uid="uid://bnuyuvkc05gnc" path="res://Objects/Door/Locks.tscn" id="8_sggmg"]
+[ext_resource type="PackedScene" uid="uid://bekw5a8eo3vly" path="res://Objects/Door/Lock.tscn" id="9_sqqfd"]
+[ext_resource type="PackedScene" uid="uid://b5ok1otwpnfgr" path="res://Objects/Mirror.tscn" id="10_pekas"]
+[ext_resource type="Material" uid="uid://cbgs0g2mga2j0" path="res://Materials/Mirror.material" id="11_gfqf7"]
+[ext_resource type="PackedScene" uid="uid://v7avom015c4d" path="res://Objects/CeilingTile.tscn" id="12_25tyn"]
+[ext_resource type="Script" path="res://Code/MusicManager.gd" id="13_xhjye"]
+[ext_resource type="AudioStream" uid="uid://bljc6tfjhosfh" path="res://Audio/Music/Ambient/ambientBackground.wav" id="14_33x6o"]
+[ext_resource type="AudioStream" uid="uid://epo36iwbdcmp" path="res://Audio/Music/Ambient/random/random1.wav" id="14_ohk7r"]
+[ext_resource type="AudioStream" uid="uid://v7t71tur6gwv" path="res://Audio/Music/Ambient/random/random2.wav" id="15_s4je4"]
+[ext_resource type="AudioStream" uid="uid://hx7rovwb6t8y" path="res://Audio/Music/Ambient/random/random3.wav" id="16_11ulh"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_six6u"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_21wyo"]
+sky_material = SubResource("ProceduralSkyMaterial_six6u")
+
+[sub_resource type="Environment" id="Environment_kvphk"]
+background_mode = 1
+sky = SubResource("Sky_21wyo")
+tonemap_mode = 2
+ssao_enabled = true
+ssil_enabled = true
+glow_enabled = true
+fog_light_color = Color(0, 0, 0, 1)
+fog_density = 0.4743
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.01
+
+[sub_resource type="QuadMesh" id="QuadMesh_viph2"]
+resource_local_to_scene = true
+material = ExtResource("11_gfqf7")
+size = Vector2(3, 2)
+
+[node name="Level" type="Node3D"]
+script = ExtResource("1_0ndj6")
+
+[node name="PlayerSpawns" type="Node3D" parent="."]
+
+[node name="spawnPoint" parent="PlayerSpawns" instance=ExtResource("2_vv0x7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -17.5, 2, -4)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_kvphk")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ItemList" type="ItemList" parent="Control"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -143.0
+offset_bottom = 178.0
+grow_horizontal = 0
+script = ExtResource("2_pjsbn")
+
+[node name="Map" type="Node3D" parent="."]
+
+[node name="Floor" type="Node3D" parent="Map"]
+
+[node name="FloorTile" parent="Map/Floor" instance=ExtResource("5_sh1rq")]
+transform = Transform3D(3, 0, 0, 0, 1, 0, 0, 0, 3, -20, 0, 0)
+
+[node name="FloorTile2" parent="Map/Floor" instance=ExtResource("5_sh1rq")]
+transform = Transform3D(3, 0, 0, 0, 1, 0, 0, 0, 3, -20, 0, 15)
+
+[node name="FloorTile3" parent="Map/Floor" instance=ExtResource("5_sh1rq")]
+transform = Transform3D(3, 0, 0, 0, 1, 0, 0, 0, 3, -5, 0, 15)
+
+[node name="Walls" type="Node3D" parent="Map"]
+
+[node name="WallTile" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0, -5)
+
+[node name="WallTile2" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0, 5)
+
+[node name="WallTile3" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0, 10)
+
+[node name="WallTile4" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0, 15)
+
+[node name="WallTile5" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0, 20)
+
+[node name="WallTile6" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -25, 0, 20)
+
+[node name="WallTile7" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20, 0, 20)
+
+[node name="WallTile8" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -15, 0, 20)
+
+[node name="WallTile9" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -10, 0, 20)
+
+[node name="WallTile10" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -5, 0, 20)
+
+[node name="WallTile11" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 20)
+
+[node name="WallTile12" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 0, 0, 10)
+
+[node name="WallTile13" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -5, 0, 10)
+
+[node name="WallTile14" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -10, 0, 10)
+
+[node name="WallTile15" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -15, 0, 10)
+
+[node name="WallTile16" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -25, 0, 10)
+
+[node name="WallTile17" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(-2.18557e-07, 0, 1, 0, 1, 0, -1, 0, -2.18557e-07, -25, 0, 5)
+
+[node name="WallTile18" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(-2.18557e-07, 0, 1, 0, 1, 0, -1, 0, -2.18557e-07, -15, 0, 5)
+
+[node name="WallTile19" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(-1, 0, -2.62268e-07, 0, 1, 0, 2.62268e-07, 0, -1, -15, 0, 5)
+
+[node name="WallTile20" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(-1, 0, -2.62268e-07, 0, 1, 0, 2.62268e-07, 0, -1, -15, 0, 0)
+
+[node name="WallTile21" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(-1, 0, -2.62268e-07, 0, 1, 0, 2.62268e-07, 0, -1, -15, 0, -5)
+
+[node name="WallTile22" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(3.0598e-07, 0, -1, 0, 1, 0, 1, 0, 3.0598e-07, -15, 0, -5)
+
+[node name="WallTile23" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(3.0598e-07, 0, -1, 0, 1, 0, 1, 0, 3.0598e-07, -20, 0, -5)
+
+[node name="WallTile24" parent="Map/Walls" instance=ExtResource("6_qd7bx")]
+transform = Transform3D(3.0598e-07, 0, -1, 0, 1, 0, 1, 0, 3.0598e-07, -25, 0, -5)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Map"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 6.5, 0)
+shadow_enabled = true
+omni_range = 15.0
+
+[node name="DoorTile" parent="." instance=ExtResource("5_hkemu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0, 0)
+
+[node name="DoorTile2" parent="." instance=ExtResource("5_hkemu")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20, 0, 5)
+
+[node name="DoorTile3" parent="." instance=ExtResource("5_hkemu")]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -20, 0, 10)
+
+[node name="DoorFrame" parent="." instance=ExtResource("7_y0pe8")]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -20, 0, 7.5)
+
+[node name="Locks" parent="DoorFrame" instance=ExtResource("8_sggmg")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[node name="Lock" parent="DoorFrame/Locks" instance=ExtResource("9_sqqfd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.118047, 1.45949, -0.538668)
+
+[node name="Lock2" parent="DoorFrame/Locks" instance=ExtResource("9_sqqfd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.113874, 2.18502, 0.55924)
+
+[node name="Lock3" parent="DoorFrame/Locks" instance=ExtResource("9_sqqfd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.113874, 3.37885, -0.627483)
+
+[node name="mirror" parent="." instance=ExtResource("10_pekas")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -13.0383, 3.5, 0.952237)
+mesh = SubResource("QuadMesh_viph2")
+
+[node name="CeilingTile" parent="." instance=ExtResource("12_25tyn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0, 0)
+
+[node name="CeilingTile2" parent="." instance=ExtResource("12_25tyn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0, 5)
+
+[node name="CeilingTile3" parent="." instance=ExtResource("12_25tyn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -25, 0, -5)
+
+[node name="CeilingTile4" parent="." instance=ExtResource("12_25tyn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, -5)
+
+[node name="CeilingTile5" parent="." instance=ExtResource("12_25tyn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 0)
+
+[node name="CeilingTile6" parent="." instance=ExtResource("12_25tyn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20, 0, 5)
+
+[node name="CeilingTile7" parent="." instance=ExtResource("12_25tyn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 5)
+
+[node name="CeilingTile8" parent="." instance=ExtResource("12_25tyn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, 0)
+
+[node name="CeilingTile9" parent="." instance=ExtResource("12_25tyn")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15, 0, -5)
+
+[node name="MusicManager" type="Node" parent="."]
+script = ExtResource("13_xhjye")
+randomBits = Array[AudioStream]([ExtResource("14_ohk7r"), ExtResource("15_s4je4"), ExtResource("16_11ulh")])
+mainTrack = ExtResource("14_33x6o")
+
+[node name="mainBackground" type="AudioStreamPlayer" parent="MusicManager"]
+stream = ExtResource("14_33x6o")
+volume_db = -22.285
+autoplay = true
+
+[node name="randomBits" type="AudioStreamPlayer" parent="MusicManager"]
+volume_db = -21.358

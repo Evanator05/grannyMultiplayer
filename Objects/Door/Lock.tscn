@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://bekw5a8eo3vly"]
+
+[ext_resource type="Script" path="res://Code/Door/Lock.gd" id="1_ward2"]
+[ext_resource type="PackedScene" uid="uid://cmy7b0shgb2cs" path="res://Objects/InteractArea.tscn" id="2_a2pad"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_eys5t"]
+size = Vector3(0.5, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hj4x8"]
+size = Vector3(0.1, 0.5, 0.5)
+
+[node name="Lock" type="Node3D"]
+script = ExtResource("1_ward2")
+
+[node name="interactArea" parent="." instance=ExtResource("2_a2pad")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="interactArea"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.18147, 0, 0)
+shape = SubResource("BoxShape3D_eys5t")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_hj4x8")
+
+[connection signal="interacted" from="interactArea" to="." method="_on_interact_area_interacted"]
